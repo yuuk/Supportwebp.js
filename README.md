@@ -1,5 +1,6 @@
 # Supportwebp.js
 Supportwebp webp兼容处理JS，原生javascript编写，内部实现了几种常用的元素选择器，兼容IE浏览器。
+
 # 参数说明
 |  参数名   |  说明   |  默认值   |
 | --- | --- | --- |
