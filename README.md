@@ -12,7 +12,7 @@ Supportwebp webp兼容处理JS，原生javascript编写，内部实现了几种�
 # 调用方法
 ``` javascript
 new Supportwebp({
-    ele: '[class="js-webp"]', // 选择元素
+    ele: '[class="js-webp"]', // 选择元素（支持class、id、tagName和属性选择器）
     attr: 'src', // 替换图片的属性
     // 成功回调
     yes: function(ele) {
