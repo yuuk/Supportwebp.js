@@ -1,24 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <title>Supportwebp.js</title>
-    </head>
-    <body>
-    	<li><img src="https://uidesign.nastydress.com/N/images/promotion/2017/easter/1200x500.jpg" id="js-webp"></li>
-    	<li><img src="https://uidesign.nastydress.com/N/images/promotion/2017/easter/1200x500.jpg" class="js-webp"></li>
-    	<li><img src="https://uidesign.nastydress.com/N/images/promotion/2017/easter/1200x500.jpg" class="js-webp"></li>
-    	<li><img src="https://uidesign.nastydress.com/N/images/promotion/2017/easter/1200x500.jpg" class="js-webp"></li>
-    	<li><img src="https://uidesign.nastydress.com/N/images/promotion/2017/easter/1200x500.jpg" class="js-webp"></li>
-    </body>
+<head>
+    <meta charset="utf-8">
+    <title>Supportwebp.js</title>
     <script type="text/javascript" src="Supportwebp.js"></script>
     <script type="text/javascript">
-        	new Supportwebp({
-        		ele: '[class="js-webp"]',
-        		attr: 'src',
-        		yes: function(ele) {
-        			console.log(ele);
-        		}
-        	});
-        </script>
+        document.ready = function(callback) {
+            if (document.addEventListener) {
+                document.addEventListener('DOMContentLoaded', function() {
+                    document.removeEventListener('DOMContentLoaded', arguments.callee, false);
+                    callback();
+                }, false);
+            } else if (document.attachEvent) {// 兼容ie
+                document.attachEvent('onreadytstatechange', function() {
+                    if (document.readyState == "complete") {
+                        document.detachEvent("onreadystatechange", arguments.callee);
+                        callback();
+                    }
+                });
+            }
+        }
+
+        document.ready(function () {
+            new Supportwebp({
+                ele: '.js-webp',
+                attr: 'src',
+                yes: function(ele) {
+                    console.log(ele.length);
+                }
+            });
+        })
+    </script>
+</head>
+
+<body>
+    <li><img src="https://uidesign.nastydress.com/N/images/promotion/2017/easter/1200x500.jpg" class="js-webp"></li>
+    <li><img src="https://uidesign.nastydress.com/N/images/promotion/2017/easter/1200x500.jpg" class="js-webp"></li>
+    <li><img src="https://uidesign.nastydress.com/N/images/promotion/2017/easter/1200x500.jpg" class="js-webp"></li>
+    <li><img src="https://uidesign.nastydress.com/N/images/promotion/2017/easter/1200x500.jpg" class="js-webp"></li>
+    <li><img src="https://uidesign.nastydress.com/N/images/promotion/2017/easter/1200x500.jpg" class="js-webp"></li>
+</body>
 </html>
