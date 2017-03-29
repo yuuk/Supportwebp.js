@@ -84,7 +84,7 @@ Supportwebp.prototype = {
     // 替换属性
     repeaceAttr: function(ele) {
         if (ele && ele.getAttribute(this.attr)) {
-            ele.setAttribute(this.attr, ele.getAttribute(this.attr).replace(/(\.jpg|\.png)/, '$1.webp'));
+            ele.setAttribute(this.attr, ele.getAttribute(this.attr).replace(/(\.jpg|\.png)$/, '$1.webp'));
         }
     },
     // 初始化
