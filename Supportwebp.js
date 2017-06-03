@@ -10,6 +10,7 @@ function Supportwebp(opts) {
     this.attr = opts.attr || 'data-original'; // 需要替换的图片属性
     this.yes = opts.yes || function() {}; // 支持webp的回调
     this.no = opts.no || function() {}; // 不支持webp的回调
+    this.ok = opts.ok || function () {}; // 支持不只都会回调
     this.init();
 }
 Supportwebp.prototype = {
@@ -74,12 +75,19 @@ Supportwebp.prototype = {
         }
     },
     // 检测
-    check: function() {
-        var _this = this,
-            WebP = new Image();
-        WebP.onload = WebP.onerror = function() {};
+    check: function(callbacks) {
+        var _this = this;
+        var WebP = new Image();
+        var callbacks = callbacks || {};
+        WebP.onload = WebP.onerror = function() {
+            if (WebP.height > 0 && WebP.width > 0) {
+                callbacks.yes();
+            } else {
+                callbacks.no();
+            }
+            callbacks.ok();
+        };
         WebP.src = this.webpSrc;
-        return WebP.height == 1;
     },
     // 替换属性
     repeaceAttr: function(ele) {
@@ -91,19 +99,26 @@ Supportwebp.prototype = {
     init: function() {
         var _this = this,
             eles = this.$$(this.ele);
-        if (this.check()) {
-            if (eles && eles.length != undefined) {
-                for (var i = 0; i < eles.length; i++) {
-                    _this.repeaceAttr(eles[i]);
+        this.check({
+            yes: function () {
+                if (eles && eles.length != undefined) {
+                    for (var i = 0; i < eles.length; i++) {
+                        _this.repeaceAttr(eles[i]);
+                    }
+                } else {
+                    _this.repeaceAttr(eles);
                 }
-            } else {
-                _this.repeaceAttr(eles);
+                // yes callback
+                _this.yes(eles)
+            },
+            no: function () {
+                // no callback
+                _this.no(eles)
+            },
+            ok: function () {
+                // no callback
+                _this.ok(eles)
             }
-            // yes callback
-            this.yes(eles)
-        } else {
-            // no callback
-            this.no(eles)
-        }
+        })
     }
 };
