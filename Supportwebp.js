@@ -7,7 +7,7 @@
 function Supportwebp(opts) {
     this.webpSrc = 'data:image/webp;base64,UklGRiYAAABXRUJQVlA4IBoAAAAwAQCdASoBAAEAAAAMJaQAA3AA/v89WAAAAA=='; // 1px webp占位图
     this.ele = opts.ele || 'js-webp'; // 选择元素
-    this.attr = opts.attr || 'data-original'; // 需要替换的图片属性
+    this.attr = opts.attr || 'data-original'; // 需要替换的图片属性，支持String或Array 如: 'attr' 或 ['attr1', 'attr2', 'attr3']
     this.yes = opts.yes || function() {}; // 支持webp的回调
     this.no = opts.no || function() {}; // 不支持webp的回调
     this.ok = opts.ok || function () {}; // 支持不只都会回调
@@ -91,8 +91,18 @@ Supportwebp.prototype = {
     },
     // 替换属性
     repeaceAttr: function(ele) {
-        if (ele && ele.getAttribute(this.attr)) {
-            ele.setAttribute(this.attr, ele.getAttribute(this.attr).replace(/(\.jpg|\.png)$/, '$1.webp'));
+        var _this = this;
+        var attr = this.attr;
+        var attrs = [];
+        if (attr instanceof Array === true) {
+            attrs = attr;
+        } else {
+            attrs.push(attr);
+        }
+        for (var i = 0;i<attrs.length;i++){
+            if (ele && ele.getAttribute(attrs[i])) {
+                ele.setAttribute(attrs[i], ele.getAttribute(attrs[i]).replace(/(\.jpg|\.png|\.JPG|\.PNG)$/, '$1' + _this.suffix));
+            }
         }
     },
     // 初始化
